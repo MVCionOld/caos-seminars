@@ -5,7 +5,7 @@
 extern int64_t f(int32_t A, int32_t B, int32_t C, int32_t x);
 
 int main() {
-    int32_t x = 2;
+    int32_t x = 3;
     int32_t A = 1;
     int32_t B = 4;
     int32_t C = 7;

@@ -20,7 +20,7 @@ int main() {
     {
         int X[] = {-1, 1, 0, -200, 400, 21, 21};
         int x0 = -200;
-        assert(sum(x0, (size_t)5, X) == 42);
+        assert(sum(x0, (size_t)7, X) == 42);
     }
 
     puts("All tests are passed!");
