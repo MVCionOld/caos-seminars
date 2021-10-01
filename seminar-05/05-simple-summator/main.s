@@ -1,22 +1,22 @@
     .text
     .global	main
 main:
-    sub sp, sp, #32
-	str	lr, [sp, #16]
+    sub sp, sp, #16
+	str	lr, [sp, #8]
 
 	ldr	x0, =FORMAT_STRING_SCANF
 	mov x1, sp
-	add x2, sp, #8
+	add x2, sp, #4
 	bl	scanf
 	ldr x1, [sp]
-	ldr x2, [sp, 8]
+	ldr x2, [sp, 4]
 
     add x3, x1, x2
     ldr	x0, =FORMAT_STRING_PRINTF
     bl	printf
 
-    ldr	lr, [sp, #16]
-    add sp, sp, #32
+    ldr	lr, [sp, #8]
+    add sp, sp, #16
 
 	mov	x0, 0
 	ret
