@@ -1,11 +1,9 @@
 #include <fcntl.h>
-#include <unistd.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <unistd.h>
 
-int main(int argc, char *argv[])
-{
-    // printf("Linux by printf"); // where it will be printed?
+int main(int argc, char *argv[]) {
+    printf("Linux by printf"); // where it will be printed?
 
     char linux_str[] = "Linux by write\n";
 
@@ -17,7 +15,7 @@ int main(int argc, char *argv[])
     //        и тогда его надо перезапустить
     //        но в данном примере этого нет
     // Подробнее в `man 2 write`
-    write(1, linux_str, sizeof(linux_str) - 1);
+    write(STDOUT_FILENO, linux_str, sizeof(linux_str) - 1);
     // exit(0); // 1. Что выведется если раскомментировать?
     // _exit(0); // 2. Что выведется если раскомментировать это?
 
@@ -50,8 +48,7 @@ int main(int argc, char *argv[])
     }
     char buffer2[4096];
     // формирование строки с текстом
-    int written_bytes = snprintf(buffer2, sizeof(buffer2),
-                                 "%d bytes read: %.*s\n", bytes_read, bytes_read, buffer);
+    int written_bytes = snprintf(buffer2, sizeof(buffer2), "%s\n", buffer);
     write(1, buffer2, written_bytes);
     close(fd);
     return 0;

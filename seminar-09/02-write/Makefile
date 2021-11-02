@@ -7,4 +7,4 @@ print:
 	echo "Hello students!" > in.txt
 	gcc print.c -o print.out
 	./print.out in.txt
-	rm -f print.out
+	rm -f print.out in.txt
