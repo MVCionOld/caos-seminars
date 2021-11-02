@@ -34,7 +34,8 @@ int main(int argc, char *argv[]) {
     if (-1 == (bytes_read = read(fd, buffer, BUFFER_SIZE))) {
         perror("Cannot read from file");
         exit_code = 1;
-        goto terminate;
+        goto terminate; // GOTO is allowed for handling errors and correct cleanup
+
     }
     printf("From file (read bytes: %zd): %s\n", bytes_read, buffer);
 
