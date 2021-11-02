@@ -1,8 +1,7 @@
 #include <windows.h>
 #include <stdio.h>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
 #ifdef WIN32
     printf("Defined WIN32\n");
 #else
@@ -20,8 +19,7 @@ int main(int argc, char *argv[])
         if (!FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
                            NULL, GetLastError(),
                            MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-                           errorBuffer, sizeof(errorBuffer), NULL))
-        {
+                           errorBuffer, sizeof(errorBuffer), NULL)) {
             printf("Format message failed with 0x%x\n", GetLastError());
             return -1;
         }
