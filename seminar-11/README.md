@@ -70,7 +70,7 @@ long page_size = sysconf(_SC_PAGE_SIZE);
 * чтение `PROT_READ`;
 * запись `PROT_WRITE`;
 * выполнение `PROT_EXE`;
-* ничего `PROT_NONE`.
+* ничего `PROT_NONE` // как Вы думаете зачем этот флаг???
 
 В случае использования отображения на файл, он должен быть открыт на чтение или запись в соответствии с требуемыми аттрибутами доступа.
 
@@ -86,3 +86,5 @@ long page_size = sysconf(_SC_PAGE_SIZE);
 RETURN VALUES
      Upon successful completion, mmap() returns a pointer to the mapped region.  Otherwise, a value of MAP_FAILED is returned and errno is set to indicate the error.
 ```
+
+Синхронизацию памяти из mmap можно с помощью системого вызова `msync`.
