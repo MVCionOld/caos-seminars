@@ -7,8 +7,8 @@
 typedef union {
   int fds[2];
   struct {
-    int in;
     int out;
+    int in;
   } pipe;
 } pipe_t;
 
@@ -24,7 +24,7 @@ int main() {
     pid_t pid_2;
 
     if ((pid_1 = fork()) == 0) {
-        dup2(p_pipe.pipe.out, STDOUT_FILENO);
+        dup2(p_pipe.pipe.in, STDOUT_FILENO);
         close_pipe(p_pipe);
 
         execlp("ps", "ps", "aux", NULL);
@@ -32,7 +32,7 @@ int main() {
     }
 
     if ((pid_2 = fork()) == 0) {
-        dup2(p_pipe.pipe.in, STDIN_FILENO);
+        dup2(p_pipe.pipe.out, STDIN_FILENO);
         close_pipe(p_pipe);
 
         execlp("tail", "tail", "-n", "4", NULL);
