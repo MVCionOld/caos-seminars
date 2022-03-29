@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.13)
+project(00-libcurl C)
+set(CMAKE_C_STANDARD 11)
+find_package(CURL REQUIRED)
+include_directories(${CURL_INCLUDE_DIRECTORIES})
+add_executable(00-libcurl main.c)
+target_link_libraries(00-libcurl ${CURL_LIBRARY})
