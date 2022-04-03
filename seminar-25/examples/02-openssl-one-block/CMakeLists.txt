@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.13)
+project(02-openssl-one-block C)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_FLAGS "-DDEBUG")
+find_package(OpenSSL COMPONENTS Crypto REQUIRED)
+include_directories(${OPENSSL_INCLUDE_DIRS} ${OPENSSL_CRYPTO_LIBRARY})
+add_executable(02-openssl-one-block main.c)
+target_link_libraries(02-openssl-one-block ${OPENSSL_INCLUDE_DIRS} ${OPENSSL_CRYPTO_LIBRARY})
