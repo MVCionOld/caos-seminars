@@ -37,6 +37,9 @@ compose_impl(
 
     /* PyObject* Py_BuildValue(const char *format, ...) */
     return Py_BuildValue("ls", integer, string);
+    /*
+     * пишем Py_RETURN_NONE; - вместо return-выражения, если функция не должна ничего возвращать
+     */
 }
 
 /* список функций модуля (может быть несколько)
@@ -49,6 +52,7 @@ static PyMethodDef
         /* имя функции в Python-модуле */ "compose",
         /* указатель на функцию в C API */ (PyCFunction)compose_impl,
         /* METH_KEYWORDS - принимает еще и именованные аргументы*/ METH_VARARGS | METH_KEYWORDS,
+        // METH_NOARGS - если функция не принимает аргументов
         /* строчка с help-информации (docstring) */ "Docstring for function 'compose(...)'"
     },
     {NULL, NULL, 0, NULL} // признак конца массива (like \0 в zero-terminated string)
