@@ -33,7 +33,7 @@ m.v.tsion@MacBook-Air-Mikhail :~$
 
 Дальше shell предоставляет Вам исполнять команды
 
-```console
+```bash
 m.v.tsion@MacBook-Air-Mikhail :~$ whoami
 m.v.tsion
 m.v.tsion@MacBook-Air-Mikhail :~$ hostname
