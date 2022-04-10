@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.15)
 
 project(00-fuse)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -fsanitize=leak -g")
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(FUSE REQUIRED fuse3)

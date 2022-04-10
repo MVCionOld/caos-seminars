@@ -1,6 +1,8 @@
 # Семинар №27
 ## Filesystem in USErspace
 
+[Write filesystem fuse](https://engineering.facile.it/blog/eng/write-filesystem-fuse/)
+
 Заголовочные файлы, в которых есть функции для работы с файловой системой:
 
 | Header file | Description |

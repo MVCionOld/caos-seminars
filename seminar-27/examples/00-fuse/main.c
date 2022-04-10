@@ -1,6 +1,7 @@
-#define FUSE_USE_VERSION 30
-#include <fuse.h>
+#define _GNU_SOURCE
+#define FUSE_USE_VERSION 31
 #include <errno.h>
+#include <fuse.h>
 #include <linux/limits.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -14,7 +15,7 @@ typedef struct {
   char* log;
 } options_t;
 
-static options_t options;
+options_t options;
 
 void print_cwd();
 
@@ -47,7 +48,8 @@ int read_callback(const char* path,
 /**
  * Структура с колбэками.
  */
-struct fuse_operations fuse_defined_operations = {
+struct fuse_operations
+fuse_defined_operations = {
     .getattr = getattr_callback,
     .read    = read_callback,
     .readdir = readdir_callback,
@@ -56,21 +58,22 @@ struct fuse_operations fuse_defined_operations = {
 /**
  * https://libfuse.github.io/doxygen/structfuse__opt.html
  */
-struct fuse_opt opt_specs[] = {
-    {
-        "--file-name %s",
-        offsetof(options_t, filename),
-        0
+struct fuse_opt
+opt_specs[] = {
+    (struct fuse_opt){
+        .templ = "--file-name=%s",
+        .offset = offsetof(options_t, filename),
+        .value = 1
     },
-    {
-        "--file-content %s",
-        offsetof(options_t, filecontent),
-        0
+    (struct fuse_opt){
+        .templ = "--file-content=%s",
+        .offset = offsetof(options_t, filecontent),
+        .value = 1
     },
-    {
-        "--log %s",
-        offsetof(options_t, log),
-        0
+    (struct fuse_opt){
+        .templ = "--log=%s",
+        .offset = offsetof(options_t, log),
+        .value = 1
     },
     FUSE_OPT_END  /* Sentinel */
 };
@@ -80,18 +83,22 @@ int main(int argc, char* argv[]) {
      * Для выделения, специфичных для конкретной файловой системы,
      * опций используется модифицируемый список опций fuse_args,
      * который инициализируется макросом FUSE_ARGS_INIT(argc, argv)
+     *
+     * P.S.: флаг "-f" - синхронный режим
+     *      (программа работает, пока `fusermount -u 00-fuse` не будет сделан)
      */
     struct fuse_args args = FUSE_ARGS_INIT(argc, argv);
 
     /*
-    * заполняемые поля должны быть инициализированы нулями
+    * Заполняемые поля должны быть инициализированы нулями.
+    *
+    * Заполнит структуру `options_t option` и удалит соответствующие
+    * аргументы из `fuse_args args`.
     */
-    fuse_opt_parse(
-        &args,
-        &options,
-        opt_specs,
-        NULL
-    );
+    if (fuse_opt_parse(&args, &options, opt_specs, NULL) == -1) {
+        return 1;
+    }
+
     print_cwd();
 
     int ret = fuse_main(
@@ -102,6 +109,7 @@ int main(int argc, char* argv[]) {
     );
     fuse_opt_free_args(&args);
 
+    fprintf(stderr, "Fuse start result code: %d\n", ret);
     return ret;
 }
 
